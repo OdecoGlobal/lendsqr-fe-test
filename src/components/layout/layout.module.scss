@@ -1,0 +1,10 @@
+@use "../../styles/mixins" as *;
+.wrapper {
+}
+
+.content {
+  padding-top: 60px;
+  @include responsive(tablet) {
+    padding-top: 100px;
+  }
+}

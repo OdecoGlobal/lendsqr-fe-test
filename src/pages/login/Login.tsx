@@ -39,61 +39,64 @@ const Login = () => {
   };
 
   return (
-    <section className={styles.login_container}>
-      <div className={styles.logo_section}>
-        <img src={logo} alt="logo" />
-      </div>
-
-      <div className={styles.content}>
-        <div className={styles.mascot}>
-          <img src={mascot} alt="mascot" />
+    <>
+      <title>Lendsqr | Login</title>
+      <section className={styles.login_container}>
+        <div className={styles.logo_section}>
+          <img src={logo} alt="logo" />
         </div>
 
-        <div className={styles.form_container}>
-          <div className={styles.form_header}>
-            <h2>Welcome!</h2>
-            <p>Enter details to login.</p>
+        <div className={styles.content}>
+          <div className={styles.mascot}>
+            <img src={mascot} alt="mascot" />
           </div>
 
-          <form className={styles.login_form} onSubmit={handleSubmit}>
-            <div>
-              <div className={styles.login_input}>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              {errors.email && <p className={styles.error}>{errors.email}</p>}
+          <div className={styles.form_container}>
+            <div className={styles.form_header}>
+              <h2>Welcome!</h2>
+              <p>Enter details to login.</p>
             </div>
 
-            <div>
-              <div className={styles.login_input}>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <span onClick={() => setShowPassword((prev) => !prev)}>
-                  {showPassword ? "HIDE" : "SHOW"}
-                </span>
+            <form className={styles.login_form} onSubmit={handleSubmit}>
+              <div>
+                <div className={styles.login_input}>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                {errors.email && <p className={styles.error}>{errors.email}</p>}
               </div>
-              {errors.password && (
-                <p className={styles.error}>{errors.password}</p>
-              )}
-            </div>
 
-            <a href="#">Forgot Password?</a>
+              <div>
+                <div className={styles.login_input}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <span onClick={() => setShowPassword((prev) => !prev)}>
+                    {showPassword ? "HIDE" : "SHOW"}
+                  </span>
+                </div>
+                {errors.password && (
+                  <p className={styles.error}>{errors.password}</p>
+                )}
+              </div>
 
-            <button type="submit" disabled={loading}>
-              {loading ? "Logging in..." : "Log In"}
-            </button>
-          </form>
+              <a href="#">Forgot Password?</a>
+
+              <button type="submit" disabled={loading}>
+                {loading ? "Logging in..." : "Log In"}
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
