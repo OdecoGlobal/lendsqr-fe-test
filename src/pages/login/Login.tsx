@@ -1,7 +1,43 @@
+import React, { useState } from "react";
 import logo from "../../assets/logo.svg";
 import mascot from "../../assets/mascot-sign-in.svg";
 import styles from "./login.module.scss";
+import { useNavigate } from "react-router";
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {},
+  );
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const validate = () => {
+    const newErrors: { email?: string; password?: string } = {};
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    }
+    if (!password) {
+      newErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters long";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.SubmitEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      navigate("/dashboard");
+    }, 1500);
+  };
+
   return (
     <section className={styles.login_container}>
       <div className={styles.logo_section}>
@@ -15,22 +51,45 @@ const Login = () => {
 
         <div className={styles.form_container}>
           <div className={styles.form_header}>
-            <h2>Welcome</h2>
-            <p>Enter details to login</p>
+            <h2>Welcome!</h2>
+            <p>Enter details to login.</p>
           </div>
 
-          <form className={styles.login_form}>
-            <div className={styles.login_input}>
-              <input type="email" placeholder="Email" />
+          <form className={styles.login_form} onSubmit={handleSubmit}>
+            <div>
+              <div className={styles.login_input}>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              {errors.email && <p className={styles.error}>{errors.email}</p>}
             </div>
 
-            <div className={styles.login_input}>
-              <input type="password" placeholder="Password" />
-              <span>SHOW</span>
+            <div>
+              <div className={styles.login_input}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <span onClick={() => setShowPassword((prev) => !prev)}>
+                  {showPassword ? "HIDE" : "SHOW"}
+                </span>
+              </div>
+              {errors.password && (
+                <p className={styles.error}>{errors.password}</p>
+              )}
             </div>
+
             <a href="#">Forgot Password?</a>
 
-            <button type="submit">Log In</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Logging in..." : "Log In"}
+            </button>
           </form>
         </div>
       </div>

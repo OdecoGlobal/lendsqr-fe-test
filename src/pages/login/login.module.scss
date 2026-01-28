@@ -7,17 +7,26 @@
   padding: 2rem 1.5rem;
 
   .logo_section {
-    margin-bottom: 20px;
+    margin-bottom: 3rem;
+
+    @include responsive(tablet) {
+      margin-bottom: 4rem;
+    }
+    img {
+      max-width: 150px;
+    }
   }
 
   .content {
-    border: 1px solid red;
-    // flex-grow: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 
-    @include responsive(desktop) {
-      display: flex;
+    @include responsive(tablet) {
+      flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      gap: 3rem;
     }
 
     .mascot {
@@ -25,19 +34,41 @@
 
       @include responsive(tablet) {
         display: block;
+        flex: 1;
+        max-width: 600px;
+      }
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
       }
     }
 
     .form_container {
-      width: 500px;
+      width: 100%;
       max-width: 500px;
       margin: 0 auto;
+      flex: 1;
+      @include responsive(tablet) {
+        margin: 0;
+      }
+
+      .error {
+        color: #e74c3c; // another red
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-top: 0.25rem;
+      }
+
       .form_header {
+        margin-bottom: 2rem;
+
         h2 {
           font-size: 2rem;
           font-weight: 700;
           color: $color-primary;
-          letter-spacing: -4%;
+          letter-spacing: -0.04em;
+          margin-bottom: 0.5rem;
         }
 
         p {
@@ -47,8 +78,6 @@
         }
       }
 
-      //   Form
-
       .login_form {
         display: flex;
         flex-direction: column;
@@ -56,6 +85,7 @@
 
         .login_input {
           border: 2px solid #545f7d26;
+          border-radius: 5px;
           width: 100%;
           height: 40px;
           display: flex;
@@ -67,36 +97,57 @@
             flex: 1;
             min-width: 0;
             border: none;
-            font-size: 12px;
+            font-size: 14px;
             font-family: inherit;
             font-weight: inherit;
             color: inherit;
-            &:focus {
+            background: none;
+            &:focus,
+            &:active {
               border: none;
               outline: none;
+              background: none;
             }
 
             &::placeholder {
               color: $color-accent;
-              font-size: 12px;
+              font-size: 14px;
               font-family: inherit;
-              font-weight: inherit;
+              font-weight: 400;
               opacity: 1;
+            }
+            &:-webkit-autofill {
+              -webkit-box-shadow: 0 0 0px 1000px white inset;
+              -webkit-text-fill-color: inherit;
             }
           }
 
           span {
             font-size: 12px;
+            font-weight: 600;
             color: $color-secondary;
             text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
+            letter-spacing: 0.05em;
+
+            &:hover {
+              opacity: 0.8;
+            }
           }
         }
 
         a {
           color: $color-secondary;
-          font-size: 14px;
+          font-size: 12px;
           text-decoration: none;
           text-transform: uppercase;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
 
         button {
@@ -104,8 +155,21 @@
           border: none;
           color: #fff;
           padding: 12px;
-          border-radius: 5px;
+          border-radius: 8px;
           width: 100%;
+          font-weight: 600;
+          font-size: 14px;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: opacity 0.2s ease;
+
+          &:hover {
+            opacity: 0.9;
+          }
+
+          &:active {
+            opacity: 0.8;
+          }
         }
       }
     }
