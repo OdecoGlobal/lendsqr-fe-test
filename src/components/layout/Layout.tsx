@@ -1,4 +1,5 @@
 import Navbar from "../navbar/Navbar";
+import Sidebar from "../sidebar/Sidebar";
 import styles from "./layout.module.scss";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -6,8 +7,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <section className="wrapper">
       <Navbar />
       <main className={styles.content}>
+        <Sidebar />
         {children}
-        hello
       </main>
     </section>
   );
