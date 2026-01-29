@@ -232,7 +232,9 @@ const Table = () => {
                         <img src={verticalDot} alt="Action button" />
                       </button>
 
-                      {showMenu === String(user.id) && <TableActionMenu />}
+                      {showMenu === String(user.id) && (
+                        <TableActionMenu userId={user.id} />
+                      )}
                     </div>
                   </td>
                 </tr>

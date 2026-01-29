@@ -1,7 +1,7 @@
 import Shared from '../../components/shared/Shared';
 
-const Dashboard = () => {
+const Users = () => {
   return <Shared />;
 };
 
-export default Dashboard;
+export default Users;
