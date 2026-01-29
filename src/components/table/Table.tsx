@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Card from '../card/Card';
 import filter from '../../assets/filter.png';
@@ -9,25 +8,30 @@ import TableActionMenu from './TableActionMenu';
 import TableFilter from './TableFilter';
 import { formatDateTime } from '../../lib/formatDate';
 import Pagination from '../pagination/Pagination';
+import EmptyComponent from '../empty/Empty';
+import axios from 'axios';
 
 const Table = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-
   const [showMenu, setShowMenu] = useState<string | null>(null);
   const [showFilter, setShowFilter] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const res = await axios.get('/data/lendsqr.json');
-        // console.log(res.data);
+
         setUsers(res.data);
         setFilteredUsers(res.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -97,6 +101,11 @@ const Table = () => {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleClearFilters = () => {
+    setFilteredUsers(users);
+    setCurrentPage(1);
   };
 
   const handleItemsPerPageChage = (newItemsPerPage: number) => {
@@ -187,38 +196,54 @@ const Table = () => {
           </thead>
 
           <tbody>
-            {currentItems.map(user => (
-              <tr key={user.id}>
-                <td data-label="Organization">{user.organization}</td>
-                <td data-label="Username">{user.user_name}</td>
-                <td data-label="Email">{user.email}</td>
-                <td data-label="Phone Number">{user.phone_number}</td>
-                <td data-label="Date Joined">
-                  {formatDateTime(new Date(user.date_joined)).dateTime}
-                </td>
-                <td data-label="Status">
-                  <span
-                    className={`${styles.status} ${getStatusClass(user.status)}`}
-                  >
-                    {user.status}
-                  </span>
-                </td>
-
-                <td>
-                  <div className={styles['action-menu']}>
-                    <button
-                      className={styles['action-btn']}
-                      onClick={() => toggleMenu(String(user.id))}
-                      aria-label="Actions"
-                    >
-                      <img src={verticalDot} alt="Action button" />
-                    </button>
-
-                    {showMenu === String(user.id) && <TableActionMenu />}
+            {isLoading ? (
+              <tr>
+                <td colSpan={7} style={{ padding: 0, border: 'none' }}>
+                  <div className={styles.loading}>
+                    <div className={styles.spinner} />
                   </div>
                 </td>
               </tr>
-            ))}
+            ) : currentItems.length > 0 ? (
+              currentItems.map(user => (
+                <tr key={user.id}>
+                  <td data-label="Organization">{user.organization}</td>
+                  <td data-label="Username">{user.user_name}</td>
+                  <td data-label="Email">{user.email}</td>
+                  <td data-label="Phone Number">{user.phone_number}</td>
+                  <td data-label="Date Joined">
+                    {formatDateTime(new Date(user.date_joined)).dateTime}
+                  </td>
+                  <td data-label="Status">
+                    <span
+                      className={`${styles.status} ${getStatusClass(user.status)}`}
+                    >
+                      {user.status}
+                    </span>
+                  </td>
+
+                  <td>
+                    <div className={styles['action-menu']}>
+                      <button
+                        className={styles['action-btn']}
+                        onClick={() => toggleMenu(String(user.id))}
+                        aria-label="Actions"
+                      >
+                        <img src={verticalDot} alt="Action button" />
+                      </button>
+
+                      {showMenu === String(user.id) && <TableActionMenu />}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7} style={{ padding: 0, border: 'none' }}>
+                  <EmptyComponent onAction={handleClearFilters} />
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

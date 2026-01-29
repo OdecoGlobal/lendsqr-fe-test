@@ -1,0 +1,69 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 400px;
+
+  @include responsive(tablet) {
+    padding: 6rem 3rem;
+  }
+}
+
+.icon {
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+
+  svg {
+    display: block;
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: $color-primary;
+  margin: 0 0 0.75rem 0;
+
+  @include responsive(tablet) {
+    font-size: 24px;
+  }
+}
+
+.message {
+  font-size: 14px;
+  color: $color-accent;
+  max-width: 500px;
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+
+  @include responsive(tablet) {
+    font-size: 16px;
+  }
+}
+
+.action {
+  padding: 0.875rem 2rem;
+  background: $color-secondary;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: darken($color-secondary, 8%);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
