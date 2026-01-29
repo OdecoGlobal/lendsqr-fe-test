@@ -1,16 +1,20 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Card from "../card/Card";
-import filter from "../../assets/filter.png";
-import verticalDot from "../../assets/vert-dot.png";
-import styles from "./table.module.scss";
-import type { FilterData, User } from "../../types";
-import TableActionMenu from "./TableActionMenu";
-import TableFilter from "./TableFilter";
-import { formatDateTime } from "../../lib/formatDate";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Card from '../card/Card';
+import filter from '../../assets/filter.png';
+import verticalDot from '../../assets/vert-dot.png';
+import styles from './table.module.scss';
+import type { FilterData, User } from '../../types';
+import TableActionMenu from './TableActionMenu';
+import TableFilter from './TableFilter';
+import { formatDateTime } from '../../lib/formatDate';
+import Pagination from '../pagination/Pagination';
 
 const Table = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const [showMenu, setShowMenu] = useState<string | null>(null);
   const [showFilter, setShowFilter] = useState(false);
@@ -18,9 +22,10 @@ const Table = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/data/lendsqr.json");
+        const res = await axios.get('/data/lendsqr.json');
         // console.log(res.data);
         setUsers(res.data);
+        setFilteredUsers(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -38,7 +43,65 @@ const Table = () => {
   };
 
   const handleFilter = (filters: FilterData) => {
-    console.log("Applying filters", filters);
+    console.log('Applying filters', filters);
+
+    const filtered = users.filter(user => {
+      if (
+        filters.organization &&
+        user.organization.toLowerCase() !== filters.organization.toLowerCase()
+      ) {
+        return false;
+      }
+
+      if (
+        filters.username &&
+        !user.user_name.toLowerCase().includes(filters.username.toLowerCase())
+      ) {
+        return false;
+      }
+
+      if (
+        filters.email &&
+        !user.email.toLowerCase().includes(filters.email.toLowerCase())
+      ) {
+        return false;
+      }
+
+      if (
+        filters.date &&
+        !formatDateTime(new Date(user.date_joined)).dateTime.includes(
+          filters.date,
+        )
+      ) {
+        return false;
+      }
+
+      if (
+        filters.status &&
+        user.status.toLowerCase() !== filters.status.toLowerCase()
+      ) {
+        return false;
+      }
+      return true;
+    });
+
+    setFilteredUsers(filtered);
+    setCurrentPage(1);
+    setShowFilter(false);
+  };
+
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleItemsPerPageChage = (newItemsPerPage: number) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
   };
 
   const getStatusClass = (status: string) => {
@@ -49,7 +112,7 @@ const Table = () => {
     setShowMenu(showMenu === id ? null : id);
   };
   const organizations = users && [
-    ...new Set(users.map((user) => user.organization)),
+    ...new Set(users.map(user => user.organization)),
   ];
 
   return (
@@ -61,14 +124,14 @@ const Table = () => {
           organizations={organizations}
         />
       )}
-      <div className={styles["table-wrapper"]}>
+      <div className={styles['table-wrapper']}>
         <table className={styles.table}>
           <thead>
             <tr>
               <th>
                 <span>ORGANIZATION</span>
                 <button
-                  className={styles["filter-btn"]}
+                  className={styles['filter-btn']}
                   onClick={handleFilterClick}
                 >
                   <img src={filter} alt="Filter icon" />
@@ -77,7 +140,7 @@ const Table = () => {
               <th>
                 <span>USERNAME</span>
                 <button
-                  className={styles["filter-btn"]}
+                  className={styles['filter-btn']}
                   onClick={handleFilterClick}
                 >
                   <img src={filter} alt="Filter icon" />
@@ -86,7 +149,7 @@ const Table = () => {
               <th>
                 <span>EMAIL</span>
                 <button
-                  className={styles["filter-btn"]}
+                  className={styles['filter-btn']}
                   onClick={handleFilterClick}
                 >
                   <img src={filter} alt="Filter icon" />
@@ -95,7 +158,7 @@ const Table = () => {
               <th>
                 <span>PHONE NUMBER</span>
                 <button
-                  className={styles["filter-btn"]}
+                  className={styles['filter-btn']}
                   onClick={handleFilterClick}
                 >
                   <img src={filter} alt="Filter icon" />
@@ -104,7 +167,7 @@ const Table = () => {
               <th>
                 <span>DATE JOINED</span>
                 <button
-                  className={styles["filter-btn"]}
+                  className={styles['filter-btn']}
                   onClick={handleFilterClick}
                 >
                   <img src={filter} alt="Filter icon" />
@@ -113,7 +176,7 @@ const Table = () => {
               <th>
                 <span>STATUS</span>
                 <button
-                  className={styles["filter-btn"]}
+                  className={styles['filter-btn']}
                   onClick={handleFilterClick}
                 >
                   <img src={filter} alt="Filter icon" />
@@ -124,7 +187,7 @@ const Table = () => {
           </thead>
 
           <tbody>
-            {users.slice(0, 10).map((user) => (
+            {currentItems.map(user => (
               <tr key={user.id}>
                 <td data-label="Organization">{user.organization}</td>
                 <td data-label="Username">{user.user_name}</td>
@@ -142,9 +205,9 @@ const Table = () => {
                 </td>
 
                 <td>
-                  <div className={styles["action-menu"]}>
+                  <div className={styles['action-menu']}>
                     <button
-                      className={styles["action-btn"]}
+                      className={styles['action-btn']}
                       onClick={() => toggleMenu(String(user.id))}
                       aria-label="Actions"
                     >
@@ -159,6 +222,15 @@ const Table = () => {
           </tbody>
         </table>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={filteredUsers.length}
+        itemsPerPage={itemsPerPage}
+        onPageChange={handlePageChange}
+        onItemPerPageChange={handleItemsPerPageChage}
+      />
     </Card>
   );
 };

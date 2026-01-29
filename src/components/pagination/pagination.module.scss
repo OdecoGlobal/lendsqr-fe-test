@@ -1,0 +1,136 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: 1.5rem;
+  background: #fff;
+  border-top: 1px solid rgba(33, 63, 125, 0.1);
+  gap: 1.5rem;
+  flex-wrap: wrap;
+
+  @include responsive(tablet) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.pagination-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  .label {
+    font-size: 14px;
+    color: $color-accent;
+    font-weight: 400;
+  }
+
+  .select {
+    padding: 0.5rem 2rem 0.5rem 0.75rem;
+    border: 1px solid rgba(33, 63, 125, 0.2);
+    border-radius: 4px;
+    font-size: 14px;
+    color: $color-primary;
+    background-color: rgba(33, 63, 125, 0.1);
+    font-weight: 500;
+    cursor: pointer;
+    appearance: none;
+    background-image: url('../../assets/caret-down.svg');
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 14px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $color-secondary;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-secondary;
+    }
+  }
+}
+
+.pagination-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  @include responsive(mobile) {
+    // width: 100%;
+  }
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(33, 63, 125, 0.1);
+  border: 1px solid rgba(33, 63, 125, 0.1);
+  border-radius: 4px;
+  color: $color-accent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: rgba(57, 205, 204, 0.1);
+    border-color: $color-secondary;
+    color: $color-secondary;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  img {
+    display: block;
+  }
+}
+.page-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 0.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  color: $color-accent;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(.active) {
+    background: rgba(33, 63, 125, 0.05);
+  }
+
+  &.active {
+    background: rgba(33, 63, 125, 0.1);
+    color: $color-primary;
+    font-weight: 500;
+  }
+}
+
+.ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  font-size: 14px;
+  color: $color-accent;
+  user-select: none;
+}
