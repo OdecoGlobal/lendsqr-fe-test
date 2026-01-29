@@ -1,8 +1,13 @@
 @use "../../styles/mixins" as *;
 
-.content {
+.wrapper {
   padding-top: 60px;
   @include responsive(tablet) {
     padding-top: 100px;
+  }
+  .content {
+    @include responsive(tablet) {
+      margin-left: 280px;
+    }
   }
 }

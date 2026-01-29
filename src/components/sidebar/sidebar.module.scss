@@ -45,13 +45,13 @@
 
   transition: transform 0.3s ease;
   transform: translateX(-100%);
-  z-index: 1000;
+  z-index: 999;
 
   &.sidebar-open {
     transform: translateX(0);
   }
   @include responsive(tablet) {
-    top: 90px;
+    top: 80px;
     left: 0;
     transform: translateX(0);
     border-right: 1px solid #e5e5e5;

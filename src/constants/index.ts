@@ -78,3 +78,22 @@ export const menuItems = [
     ],
   },
 ];
+
+export const status = [
+  {
+    key: "active",
+    value: "Active",
+  },
+  {
+    key: "inactive",
+    value: "Inactive",
+  },
+  {
+    key: "pending",
+    value: "Pending",
+  },
+  {
+    key: "blacklisted",
+    value: "Blacklisted",
+  },
+];

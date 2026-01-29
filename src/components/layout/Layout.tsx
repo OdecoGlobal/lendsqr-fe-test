@@ -4,11 +4,11 @@ import styles from "./layout.module.scss";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <section className="wrapper">
+    <section className="">
       <Navbar />
-      <main className={styles.content}>
+      <main className={styles.wrapper}>
         <Sidebar />
-        {children}
+        <div className={styles.content}>{children}</div>
       </main>
     </section>
   );

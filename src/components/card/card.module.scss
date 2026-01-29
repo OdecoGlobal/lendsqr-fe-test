@@ -1,0 +1,36 @@
+@use "../../styles/mixins" as *;
+
+.card {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(33, 63, 125, 0.06);
+  overflow: hidden;
+  position: relative;
+
+  &.padding-none {
+    padding: 0;
+  }
+
+  &.padding-small {
+    padding: 1rem;
+  }
+
+  &.padding-medium {
+    padding: 1.5rem;
+  }
+
+  &.padding-large {
+    padding: 2rem;
+  }
+
+  @include responsive(mobile) {
+    &.padding-medium {
+      padding: 1rem;
+    }
+
+    &.padding-large {
+      padding: 1.5rem;
+    }
+  }
+}
