@@ -1,9 +1,9 @@
-import { useState, type ChangeEvent } from "react";
-import styles from "./filter.module.scss";
-import { status } from "../../constants";
-import type { FilterData } from "../../types";
-import Card from "../card/Card";
-import Button from "../button/Button";
+import { useState, type ChangeEvent } from 'react';
+import styles from './filter.module.scss';
+import { status } from '../../constants';
+import type { FilterData } from '../../types';
+import Card from '../card/Card';
+import Button from '../button/Button';
 
 interface FilterProps {
   onClose: () => void;
@@ -12,12 +12,12 @@ interface FilterProps {
 }
 
 const initialData: FilterData = {
-  organization: "",
-  username: "",
-  email: "",
-  date: "",
-  phoneNumber: "",
-  status: "",
+  organization: '',
+  username: '',
+  email: '',
+  date: '',
+  phoneNumber: '',
+  status: '',
 };
 
 const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
@@ -26,7 +26,7 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setFilters((prev) => ({
+    setFilters(prev => ({
       ...prev,
       [name]: value,
     }));
@@ -35,28 +35,26 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
   const handleReset = () => {
     setFilters(initialData);
     setTimeout(() => onClose(), 500);
-    console.log("Filters reset");
   };
   const handleFilter = () => {
-    console.log("Filters data", filters);
     setTimeout(() => onClose(), 500);
     onFilter(filters);
   };
 
   return (
-    <Card className={styles["filter-card"]}>
+    <Card className={styles['filter-card']}>
       <div
-        className={styles["filter-popup"]}
-        onClick={(e) => e.stopPropagation()}
+        className={styles['filter-popup']}
+        onClick={e => e.stopPropagation()}
       >
-        <div className={styles["filter-overlay"]} onClick={onClose} />
+        <div className={styles['filter-overlay']} onClick={onClose} />
 
         <header>
           <h3>Filter</h3>
         </header>
 
-        <main className={styles["filter-body"]}>
-          <div className={styles["form-group"]}>
+        <main className={styles['filter-body']}>
+          <div className={styles['form-group']}>
             <label htmlFor="organization">Organizations</label>
             <select
               name="organization"
@@ -65,7 +63,7 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
               onChange={handleInputChange}
             >
               <option value="">Select</option>
-              {organizations.map((organization) => (
+              {organizations.map(organization => (
                 <option value={organization} key={organization}>
                   {organization}
                 </option>
@@ -73,7 +71,7 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
             </select>
           </div>
 
-          <div className={styles["form-group"]}>
+          <div className={styles['form-group']}>
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -85,7 +83,7 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
             />
           </div>
 
-          <div className={styles["form-group"]}>
+          <div className={styles['form-group']}>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -97,7 +95,7 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
             />
           </div>
 
-          <div className={styles["form-group"]}>
+          <div className={styles['form-group']}>
             <label htmlFor="date">Date</label>
             <input
               type="date"
@@ -109,7 +107,7 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
             />
           </div>
 
-          <div className={styles["form-group"]}>
+          <div className={styles['form-group']}>
             <label htmlFor="phoneNumber">Phone Number</label>
             <input
               type="tel"
@@ -121,7 +119,7 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
             />
           </div>
 
-          <div className={styles["form-group"]}>
+          <div className={styles['form-group']}>
             <label htmlFor="status">Status</label>
             <select
               name="status"
@@ -130,7 +128,7 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
               onChange={handleInputChange}
             >
               <option value="">Select</option>
-              {status.map((stat) => (
+              {status.map(stat => (
                 <option value={stat.key} key={stat.key}>
                   {stat.value}
                 </option>
@@ -139,9 +137,9 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
           </div>
         </main>
 
-        <div className={styles["filter-actions"]}>
+        <div className={styles['filter-actions']}>
           <Button
-            className={styles["reset-btn"]}
+            className={styles['reset-btn']}
             type="button"
             onClick={handleReset}
             variant="secondary"
@@ -149,7 +147,7 @@ const TableFilter = ({ onClose, onFilter, organizations }: FilterProps) => {
             Reset
           </Button>
           <Button
-            className={styles["filter-btn"]}
+            className={styles['filter-btn']}
             type="button"
             onClick={handleFilter}
           >

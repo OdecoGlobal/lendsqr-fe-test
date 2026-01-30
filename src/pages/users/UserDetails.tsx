@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import type { User } from '../../types';
-import axios from 'axios';
+
 import Loading from '../../components/loading/Loading';
 import EmptyComponent from '../../components/empty/Empty';
 import Button from '../../components/button/Button';
@@ -15,6 +15,7 @@ import userBig from '../../assets/user-big.svg';
 import StarTier from '../../components/stars/Stars';
 import { formatCurrency } from '../../lib/formatCurrency';
 import UserDetailsComponent from './UserDetailsComponent';
+import { fetchUsers } from '../../lib/api';
 
 const UsersDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,11 +25,11 @@ const UsersDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const loadUser = async () => {
       try {
         setIsLoading(true);
-        const res = await axios.get('/data/lendsqr.json');
-        const foundUser = res.data.find((user: User) => String(user.id) === id);
+        const data = await fetchUsers();
+        const foundUser = data.find((user: User) => String(user.id) === id);
         setUser(foundUser || null);
       } catch (error) {
         console.error(error);
@@ -36,7 +37,7 @@ const UsersDetails = () => {
         setIsLoading(false);
       }
     };
-    fetchUser();
+    loadUser();
   }, [id]);
 
   const handleBack = () => {

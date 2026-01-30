@@ -10,8 +10,9 @@ import Loading from '../loading/Loading';
 import filter from '../../assets/filter.svg';
 import verticalDot from '../../assets/vert-dot.svg';
 import { formatDateTime } from '../../lib/formatDate';
-import axios from 'axios';
+
 import styles from './table.module.scss';
+import { fetchUsers } from '../../lib/api';
 
 const Table = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -23,13 +24,13 @@ const Table = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadData = async () => {
       try {
         setIsLoading(true);
-        const res = await axios.get('/data/lendsqr.json');
+        const data = await fetchUsers();
 
-        setUsers(res.data);
-        setFilteredUsers(res.data);
+        setUsers(data);
+        setFilteredUsers(data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -37,7 +38,7 @@ const Table = () => {
       }
     };
 
-    fetchData();
+    loadData();
   }, []);
 
   const handleFilterClick = () => {
@@ -49,8 +50,6 @@ const Table = () => {
   };
 
   const handleFilter = (filters: FilterData) => {
-    console.log('Applying filters', filters);
-
     const filtered = users.filter(user => {
       if (
         filters.organization &&
