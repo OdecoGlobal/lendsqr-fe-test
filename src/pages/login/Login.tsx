@@ -1,40 +1,28 @@
-import React, { useState } from "react";
-import logo from "../../assets/logo.svg";
-import mascot from "../../assets/mascot-sign-in.svg";
-import styles from "./login.module.scss";
-import { useNavigate } from "react-router";
+import React, { useState } from 'react';
+import logo from '../../assets/logo.svg';
+import mascot from '../../assets/mascot-sign-in.svg';
+import styles from './login.module.scss';
+import { useNavigate } from 'react-router';
+import { validateLogin } from '../../lib/validateLogin';
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {},
   );
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const validate = () => {
-    const newErrors: { email?: string; password?: string } = {};
-
-    if (!email.trim()) {
-      newErrors.email = "Email is required";
-    }
-    if (!password) {
-      newErrors.password = "Password is required";
-    } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    const newErrors = validateLogin(email, password);
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      navigate("/dashboard");
+      navigate('/dashboard');
     }, 1500);
   };
 
@@ -64,7 +52,7 @@ const Login = () => {
                     type="email"
                     placeholder="Email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value)}
                   />
                 </div>
                 {errors.email && <p className={styles.error}>{errors.email}</p>}
@@ -73,13 +61,13 @@ const Login = () => {
               <div>
                 <div className={styles.login_input}>
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     placeholder="Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={e => setPassword(e.target.value)}
                   />
-                  <span onClick={() => setShowPassword((prev) => !prev)}>
-                    {showPassword ? "HIDE" : "SHOW"}
+                  <span onClick={() => setShowPassword(prev => !prev)}>
+                    {showPassword ? 'HIDE' : 'SHOW'}
                   </span>
                 </div>
                 {errors.password && (
@@ -90,7 +78,7 @@ const Login = () => {
               <a href="#">Forgot Password?</a>
 
               <button type="submit" disabled={loading}>
-                {loading ? "Logging in..." : "Log In"}
+                {loading ? 'Logging in...' : 'Log In'}
               </button>
             </form>
           </div>

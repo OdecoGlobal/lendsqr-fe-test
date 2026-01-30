@@ -1,7 +1,7 @@
 import styles from './table.module.scss';
-import eyeIcon from '../../assets/eye.png';
-import userCheck2 from '../../assets/user-check-2.png';
-import userTimes2 from '../../assets/user-times-2.png';
+import eyeIcon from '../../assets/eye.svg';
+import userCheck2 from '../../assets/user-check-2.svg';
+import userTimes2 from '../../assets/user-times-2.svg';
 import { useNavigate } from 'react-router';
 
 const TableActionMenu = ({ userId }: { userId: string | number }) => {

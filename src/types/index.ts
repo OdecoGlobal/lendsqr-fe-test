@@ -19,7 +19,7 @@ export interface User {
   phone_number: string;
   date_joined: string;
   status: string;
-  bvn: number;
+  bvn: string;
   gender: string;
   marital_status: string;
   children: number;
@@ -29,7 +29,8 @@ export interface User {
   employment_sector: string;
   employment_duration: number;
   office_email: string;
-  monthly_income: number;
+  monthly_income_min: number;
+  monthly_income_max: number;
   loan_repayment: number;
   twitter: string;
   facebook: string;

@@ -14,6 +14,7 @@ import arrowBack from '../../assets/arrow-back.svg';
 import userBig from '../../assets/user-big.svg';
 import StarTier from '../../components/stars/Stars';
 import { formatCurrency } from '../../lib/formatCurrency';
+import UserDetailsComponent from './UserDetailsComponent';
 
 const UsersDetails = () => {
   const { id } = useParams<{ id: string }>();
@@ -76,12 +77,12 @@ const UsersDetails = () => {
         <header className={styles.header}>
           <h1 className={styles.title}>User Details</h1>
           <div className={styles.actions}>
-            <Button variant="secondary" className={styles['action-btn']}>
+            <Button variant="danger" className={styles['action-btn']}>
               BLACKLIST USER
             </Button>
 
-            <Button variant="primary" className={styles['action-btn']}>
-              Activate USER
+            <Button variant="success" className={styles['action-btn']}>
+              ACTIVATE USER
             </Button>
           </div>
         </header>
@@ -160,6 +161,7 @@ const UsersDetails = () => {
             </button>
           </div>
         </Card>
+        <UserDetailsComponent user={user} />
       </div>
     </Layout>
   );

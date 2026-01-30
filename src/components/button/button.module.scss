@@ -28,11 +28,11 @@
 .button-primary {
   background: $color-secondary;
   color: #fff;
+  border: 1px solid $color-secondary;
 
   &:hover:not(:disabled) {
     background: darken($color-secondary, 8%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(57, 205, 204, 0.3);
+    border-color: darken($color-secondary, 8%);
   }
 
   &:active:not(:disabled) {
@@ -52,5 +52,33 @@
 
   &:active:not(:disabled) {
     background: #f0f0f0;
+  }
+}
+
+.button-danger {
+  background: #fff;
+  color: #e4033b;
+  border: 1px solid #e4033b;
+
+  &:hover:not(:disabled) {
+    background: rgba(228, 3, 59, 0.05);
+  }
+
+  &:active:not(:disabled) {
+    background: rgba(228, 3, 59, 0.1);
+  }
+}
+
+.button-success {
+  background: #fff;
+  color: $color-secondary;
+  border: 1px solid $color-secondary;
+
+  &:hover:not(:disabled) {
+    background: rgba(57, 205, 204, 0.05);
+  }
+
+  &:active:not(:disabled) {
+    background: rgba(57, 205, 204, 0.1);
   }
 }

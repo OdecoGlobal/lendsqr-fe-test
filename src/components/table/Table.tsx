@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
-import Card from '../card/Card';
-import filter from '../../assets/filter.png';
-import verticalDot from '../../assets/vert-dot.png';
-import styles from './table.module.scss';
 import type { FilterData, User } from '../../types';
+import Card from '../card/Card';
+import Pagination from '../pagination/Pagination';
 import TableActionMenu from './TableActionMenu';
 import TableFilter from './TableFilter';
-import { formatDateTime } from '../../lib/formatDate';
-import Pagination from '../pagination/Pagination';
 import EmptyComponent from '../empty/Empty';
-import axios from 'axios';
 import Loading from '../loading/Loading';
+
+import filter from '../../assets/filter.svg';
+import verticalDot from '../../assets/vert-dot.svg';
+import { formatDateTime } from '../../lib/formatDate';
+import axios from 'axios';
+import styles from './table.module.scss';
 
 const Table = () => {
   const [users, setUsers] = useState<User[]>([]);
