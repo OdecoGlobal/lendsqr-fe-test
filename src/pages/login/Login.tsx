@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../../assets/logo.svg';
 import mascot from '../../assets/mascot-sign-in.svg';
 import styles from './login.module.scss';
 import { useNavigate } from 'react-router';
 import { validateLogin } from '../../lib/validateLogin';
+import { isAuthenticated } from '../../lib/auth';
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -14,11 +15,18 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
+
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     const newErrors = validateLogin(email, password);
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
+    localStorage.setItem('isAuthenticated', 'true');
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
