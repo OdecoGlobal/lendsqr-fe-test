@@ -1,5 +1,6 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
+@use 'sass:color';
 
 .button {
   padding: 0.875rem 1.5rem;
@@ -31,12 +32,12 @@
   border: 1px solid $color-secondary;
 
   &:hover:not(:disabled) {
-    background: darken($color-secondary, 8%);
-    border-color: darken($color-secondary, 8%);
+    background: color.adjust($color-secondary, $lightness: -8%);
+    border-color: color.adjust($color-secondary, $lightness: -8%);
   }
 
   &:active:not(:disabled) {
-    background: darken($color-secondary, 12%);
+    background: color.adjust($color-secondary, $lightness: -12%);
   }
 }
 

@@ -1,5 +1,6 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
+@use 'sass:color';
 
 .empty-state {
   display: flex;
@@ -59,7 +60,7 @@
   transition: all 0.2s ease;
 
   &:hover {
-    background: darken($color-secondary, 8%);
+    background: color.adjust($color-secondary, $lightness: -8%);
     transform: translateY(-1px);
   }
 
