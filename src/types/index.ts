@@ -7,9 +7,14 @@ interface Guarantor {
 
 export interface User {
   id: number;
+  user_id: string;
   full_name: string;
   user_name: string;
   email: string;
+  account_balance: string;
+  account_number: string;
+  bank: string;
+  user_tier: 1 | 2 | 3;
   organization: string;
   phone_number: string;
   date_joined: string;

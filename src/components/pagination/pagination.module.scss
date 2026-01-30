@@ -4,15 +4,16 @@
 .pagination {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-
-  padding: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 0.5rem;
   background: #fff;
   border-top: 1px solid rgba(33, 63, 125, 0.1);
   gap: 1.5rem;
   flex-wrap: wrap;
 
   @include responsive(tablet) {
+    padding: 1.5rem;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -63,10 +64,6 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-
-  @include responsive(mobile) {
-    // width: 100%;
-  }
 }
 
 .nav-btn {
@@ -106,6 +103,7 @@
   padding: 0 0.5rem;
   background: transparent;
   border: none;
+
   border-radius: 4px;
   font-size: 14px;
   color: $color-accent;

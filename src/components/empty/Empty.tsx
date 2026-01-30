@@ -1,6 +1,19 @@
 import Button from '../button/Button';
 import styles from './empty.module.scss';
-const EmptyComponent = ({ onAction }: { onAction: () => void }) => {
+
+interface EmptyProps {
+  onAction: () => void;
+  actionLabel: string;
+  title?: string;
+  description?: string;
+}
+
+const EmptyComponent = ({
+  actionLabel,
+  onAction,
+  title = 'No results found',
+  description = `We couldn't find any results matching your filters. Try adjusting your search criteria.`,
+}: EmptyProps) => {
   return (
     <div className={styles['empty-state']}>
       <div className={styles.icon}>
@@ -19,13 +32,10 @@ const EmptyComponent = ({ onAction }: { onAction: () => void }) => {
           <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
         </svg>
       </div>
-      <h3 className={styles.title}>No results found</h3>
-      <p className={styles.message}>
-        We couldn't find any results matching your filters. Try adjusting your
-        search criteria.
-      </p>
+      <h3 className={styles.title}>{title}</h3>
+      <p className={styles.message}>{description}</p>
 
-      <Button onClick={onAction}>Clear Filter</Button>
+      <Button onClick={onAction}>{actionLabel}</Button>
     </div>
   );
 };

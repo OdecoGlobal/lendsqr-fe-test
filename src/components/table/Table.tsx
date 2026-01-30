@@ -10,6 +10,7 @@ import { formatDateTime } from '../../lib/formatDate';
 import Pagination from '../pagination/Pagination';
 import EmptyComponent from '../empty/Empty';
 import axios from 'axios';
+import Loading from '../loading/Loading';
 
 const Table = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -18,7 +19,7 @@ const Table = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [showMenu, setShowMenu] = useState<string | null>(null);
   const [showFilter, setShowFilter] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -125,7 +126,7 @@ const Table = () => {
   ];
 
   return (
-    <Card>
+    <Card padding="none">
       {showFilter && (
         <TableFilter
           onClose={handleCloseFilter}
@@ -199,9 +200,7 @@ const Table = () => {
             {isLoading ? (
               <tr>
                 <td colSpan={7} style={{ padding: 0, border: 'none' }}>
-                  <div className={styles.loading}>
-                    <div className={styles.spinner} />
-                  </div>
+                  <Loading />
                 </td>
               </tr>
             ) : currentItems.length > 0 ? (
@@ -242,7 +241,10 @@ const Table = () => {
             ) : (
               <tr>
                 <td colSpan={7} style={{ padding: 0, border: 'none' }}>
-                  <EmptyComponent onAction={handleClearFilters} />
+                  <EmptyComponent
+                    actionLabel="Clear Filters"
+                    onAction={handleClearFilters}
+                  />
                 </td>
               </tr>
             )}
