@@ -1,12 +1,14 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./styles/global.scss";
-import App from "./App.tsx";
-import { BrowserRouter } from "react-router";
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './styles/global.scss';
+import App from './App.tsx';
+import { BrowserRouter } from 'react-router';
+import { Analytics } from '@vercel/analytics/next';
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+      <Analytics />
       <App />
     </BrowserRouter>
   </StrictMode>,
